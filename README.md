@@ -1,4 +1,4 @@
-jQuery-PicasaGallery
+jQuery-Picasa-Gallery
 ====================
 
 jQuery plugin widget that displays your public picasa web albums.
