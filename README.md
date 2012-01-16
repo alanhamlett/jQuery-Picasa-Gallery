@@ -6,7 +6,7 @@ jQuery plugin widget that displays your public picasa web albums.
 Example
 -------
 
-http://ahamlett.com/picasagallery-1.0.0/example.html
+http://ahamlett.com/jQuery-Picasa-Gallery/example.html
 
 Download
 --------
@@ -16,7 +16,7 @@ https://github.com/alanhamlett/jQuery-Picasa-Gallery/tarball/master
 Project Page
 ------------
 
-http://plugins.jquery.com/project/picasagallery
+https://github.com/alanhamlett/jQuery-Picasa-Gallery
 
 License
 -------
