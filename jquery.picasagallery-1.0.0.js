@@ -40,7 +40,7 @@
         // restore album list from hidden div if exists
         if(data.loaded) {
             $this.children('div:last').html('loading...').hide();
-            $this.children('p:first').text('Photo Gallery');
+            $this.children('span[class="picasagallery_title"]:first').html('');
             $this.children('div:first').show();
             busy = false;
             return;
@@ -56,13 +56,13 @@
         $.getJSON(url, 'callback=?', function(json) {
             
             // initialize album html content
-            $this.html("<p class='picasagallery_header'>Photo Gallery</p><div></div><div></div>");
+            $this.html("<span class='picasagallery_header'>Photo Gallery</span><span class='picasagallery_title'></span><div></div><div></div>");
             $this.children('div:last').hide();
-            $this.children('p:first').click(picasagallery_load_albums);
+            $this.children('span[class="picasagallery_header"]:first').click(picasagallery_load_albums);
             
             // loop through albums
             for(i = 0; i < json.feed.entry.length; i++) {
-                var album_title = json.feed.entry[i].title.$t;
+                var album_title = htmlencode(json.feed.entry[i].title.$t);
                 
                 // skip this album if in hide_albums array
                 if($.inArray(album_title, data.hide_albums) > -1) {
@@ -104,21 +104,22 @@
         // initialize album html content
         dom.children('div:last').html('loading...').show();
         dom.children('div:first').hide();
-        dom.children('p:first').text('Back To Album List');
         
         // make ajax call to get album's images
         $.getJSON(url, 'callback=?', function(json) {
             
-            // add html for album's title
-            dom.children('div:last').html(
-                "<p class='picasagallery_title'><strong>Album:</strong> " +
-                json.feed.title.$t +
-                "</p>"
-            );
-            
+            // set album's title
+            dom.children('span[class="picasagallery_title"]:first').html('<strong>Album:</strong> ' + json.feed.title.$t);
+           
+            // reset album html
+            dom.children('div:last').html('');
+
             // loop through album's images
             for(i = 0; i < json.feed.entry.length; i++) {
-                
+               
+                // get image description
+                var summary = htmlencode(json.feed.entry[i].summary.$t);
+
                 // add html for this image
                 dom.children('div:last').append(
                     "<a rel='picasagallery_thumbnail' class='picasagallery_thumbnail' href='" +
@@ -126,7 +127,9 @@
                     "'><img src='" +
                     json.feed.entry[i].media$group.media$thumbnail[1].url +
                     "' alt='" +
-                    json.feed.entry[i].title.$t +
+                    summary +
+                    "' title='" +
+                    summary +
                     "'/></a>"
                 );
             }
@@ -140,13 +143,20 @@
                 'transitionOut'		: 'none',
                 'titlePosition' 	: 'outside',
                 'titleFormat'       : function(title, currentArray, currentIndex, currentOpts) {
-                    return '<span id="fancybox-title-outside">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + '<br>Hint: Use the mouse scroll wheel</span>';
+                    return '<span id="fancybox-title-outside">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + '<br>' + title + '</span>';
                 }
             });
 
             busy = false;
         });
     };
+
+    var htmlencode = function(str) {
+        while(str.search("'") + str.search('"') + str.search("<") + str.search(">") > -4) {
+            str = str.replace("'","&#39;").replace('"', "&#34;").replace("<","&lt;").replace(">","&gt;");
+        }
+        return str;
+    }
 
     var picasagallery_error = function(msg) {
         if (typeof console === "undefined" || typeof console.error === "undefined") {

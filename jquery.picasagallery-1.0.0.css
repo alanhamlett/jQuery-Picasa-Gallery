@@ -12,8 +12,8 @@
 	text-decoration: underline;
 }
 .picasagallery_title {
-	margin: 0px 10px 10px 10px; /* top right bottom left */
-	font-size: 12pt;
+	margin: 10px 10px 10px 10px; /* top right bottom left */
+	font-size: 13pt;
 }
 .picasagallery_album {
 	float: left;
