@@ -47,7 +47,7 @@
         }
         
         var protocol = document.location.protocol == 'http:' ? 'http:' : 'https:';
-        var url	= protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '?kind=album&access=public&alt=json';
+        var url    = protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '?kind=album&access=public&alt=json';
         
         // print loading message
         $this.html("loading...");
@@ -70,8 +70,8 @@
                 }
 
                 // get album thumbnail
-	        var img_src = json.feed.entry[i].media$group.media$content[0].url.split('/');
-		var img_filename = img_src.pop();
+                var img_src = json.feed.entry[i].media$group.media$content[0].url.split('/');
+                var img_filename = img_src.pop();
                 var img_src = img_src.join('/');
 
                 // append html for this album
@@ -104,7 +104,7 @@
         var data = dom.data('picasagallery'); // original options passed to picasagallery()
         var album = $(this).attr('alt');
         var protocol = document.location.protocol == 'http:' ? 'http:' : 'https:';
-        var url	= protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '/album/' + album + '?kind=photo&alt=json';
+        var url    = protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '/album/' + album + '?kind=photo&alt=json';
 
         // initialize album html content
         dom.children('div:last').html('loading...').show();
@@ -125,9 +125,9 @@
                 // get image properties
                 var summary = htmlencode(json.feed.entry[i].summary.$t);
                 var img_src = json.feed.entry[i].content.src.split('/');
-		var img_filename = img_src.pop();
+                var img_filename = img_src.pop();
                 var img_src = img_src.join('/');
-		var screen_width = $(window).width();
+                var screen_width = $(window).width();
 
                 // add html for this image
                 dom.children('div:last').append(
@@ -148,11 +148,11 @@
             
             // setup fancybox to show larger images
             $("a[rel=picasagallery_thumbnail]").fancybox({
-                'transitionIn'		: 'none',
-                'transitionOut'		: 'none',
-                'titlePosition' 	: 'outside',
+                'transitionIn'      : 'none',
+                'transitionOut'     : 'none',
+                'titlePosition'     : 'over',
                 'titleFormat'       : function(title, currentArray, currentIndex, currentOpts) {
-                    return '<span id="fancybox-title-outside">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + '<br>' + title + '</span>';
+                    return '<span id="fancybox-title-over">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
                 }
             });
 
@@ -184,9 +184,9 @@
 
     $.fn.picasagallery = function(options) {
         this.data('picasagallery', $.extend({
-            'username'      : '',
-            'hide_albums'   : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
-            'loaded'        : false,
+            'username'        : '',
+            'hide_albums'     : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
+            'loaded'          : false,
             'thumbnail_width' : '160'
         }, options));
         var data = this.data('picasagallery');
