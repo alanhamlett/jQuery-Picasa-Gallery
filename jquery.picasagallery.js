@@ -69,10 +69,15 @@
                     continue;
                 }
 
+                // get album thumbnail
+	        var img_src = json.feed.entry[i].media$group.media$content[0].url.split('/');
+		var img_filename = img_src.pop();
+                var img_src = img_src.join('/');
+
                 // append html for this album
                 $this.children('div:first').append(
                     "<div class='picasagallery_album'><img src='" +
-                    json.feed.entry[i].media$group.media$thumbnail[0].url +
+                    img_src + '/s' + data.thumbnail_width + '-c/' + img_filename +
                     "' alt='" + json.feed.entry[i].gphoto$name.$t + "' title='" + album_title +
                     "'/><p><strong>" + album_title + "</strong></p><p>" +
                     json.feed.entry[i].gphoto$numphotos.$t +
@@ -117,15 +122,19 @@
             // loop through album's images
             for(i = 0; i < json.feed.entry.length; i++) {
                
-                // get image description
+                // get image properties
                 var summary = htmlencode(json.feed.entry[i].summary.$t);
+                var img_src = json.feed.entry[i].content.src.split('/');
+		var img_filename = img_src.pop();
+                var img_src = img_src.join('/');
+		var screen_width = $(window).width();
 
                 // add html for this image
                 dom.children('div:last').append(
                     "<a rel='picasagallery_thumbnail' class='picasagallery_thumbnail' href='" +
-                    json.feed.entry[i].content.src +
+                    img_src + '/s' + screen_width + '/' + img_filename +
                     "'><img src='" +
-                    json.feed.entry[i].media$group.media$thumbnail[1].url +
+                    img_src + '/s' + data.thumbnail_width + '/' + img_filename +
                     "' alt='" +
                     summary +
                     "' title='" +
@@ -177,7 +186,8 @@
         this.data('picasagallery', $.extend({
             'username'      : '',
             'hide_albums'   : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
-            'loaded'        : false
+            'loaded'        : false,
+            'thumbnail_width' : '160'
         }, options));
         var data = this.data('picasagallery');
         if(data === undefined) {
