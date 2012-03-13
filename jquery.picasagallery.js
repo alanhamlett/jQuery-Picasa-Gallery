@@ -148,9 +148,11 @@
             
             // setup fancybox to show larger images
             $("a[rel=picasagallery_thumbnail]").fancybox({
-                'transitionIn'      : 'none',
-                'transitionOut'     : 'none',
+                'transitionIn'      : 'elastic',
+                'transitionOut'     : 'elastic',
                 'titlePosition'     : 'over',
+                'opacity'           : true,
+                'changeSpeed'       : 200,
                 'titleFormat'       : function(title, currentArray, currentIndex, currentOpts) {
                     return '<span id="fancybox-title-over">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
                 }
