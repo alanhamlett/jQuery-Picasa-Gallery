@@ -22,4 +22,5 @@ License
 -------
 
 Released under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+Uses the [fancyBox](http://fancyapps.com/fancybox/) jQuery plugin, which is free for non-commercial use.
 
