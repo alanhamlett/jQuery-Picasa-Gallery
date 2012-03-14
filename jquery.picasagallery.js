@@ -133,6 +133,8 @@
                 dom.children('div:last').append(
                     "<a rel='picasagallery_thumbnail' class='picasagallery_thumbnail' href='" +
                     img_src + '/s' + screen_width + '/' + img_filename +
+                    "' title='" +
+                    summary +
                     "'><img src='" +
                     img_src + '/s' + data.thumbnail_width + '/' + img_filename +
                     "' alt='" +
@@ -148,13 +150,18 @@
             
             // setup fancybox to show larger images
             $("a[rel=picasagallery_thumbnail]").fancybox({
-                'transitionIn'      : 'elastic',
-                'transitionOut'     : 'elastic',
-                'titlePosition'     : 'over',
-                'opacity'           : true,
-                'changeSpeed'       : 200,
-                'titleFormat'       : function(title, currentArray, currentIndex, currentOpts) {
-                    return '<span id="fancybox-title-over">Image ' +  (currentIndex + 1) + ' / ' + currentArray.length + ' ' + title + '</span>';
+                closeClick        : false, // If set to true, fancyBox will be closed when user clicks the content
+                mouseWheel        : false, // If set to true, you will be able to navigate gallery using the mouse wheel
+                loop              : true, // If set to true, enables cyclic navigation. This means, if you click "next" after you reach the last element, first element will be displayed (and vice versa).
+                openEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                closeEffect       : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                nextEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                prevEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                helpers           : {
+                    thumbs  : {
+                        width   : 80,
+                        height  : 80
+                    }
                 }
             });
 
