@@ -56,7 +56,7 @@
         $.getJSON(url, 'callback=?', function(json) {
             
             // initialize album html content
-            $this.html("<span class='picasagallery_header'>"data.title"</span><span class='picasagallery_title'></span><div></div><div></div>");
+            $this.html("<span class='picasagallery_header'>"+data.title+"</span><span class='picasagallery_title'></span><div></div><div></div>");
             $this.children('div:last').hide();
             $this.children('span[class="picasagallery_header"]:first').click(picasagallery_load_albums);
             
