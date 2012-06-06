@@ -2,7 +2,7 @@
 jQuery plugin that displays your public picasa web albums on your website in a photo gallery.
 
 ### Example
-<http://ahamlett.com/jQuery-Picasa-Gallery/example.html>
+<http://alanhamlett.github.com/jQuery-Picasa-Gallery>
 
 ### Download
 <https://github.com/alanhamlett/jQuery-Picasa-Gallery/tarball/master>
