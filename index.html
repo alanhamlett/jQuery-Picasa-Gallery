@@ -9,13 +9,10 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     
     <!-- EXAMPLE REQUIREMENTS -->
-    <link href="./fancyBox/jquery.fancybox.css?v=2.0.5" rel="stylesheet" type="text/css" media="screen" />
-    <link href="./jquery.picasagallery.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="./fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" rel="stylesheet" type="text/css" media="screen" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="./fancyBox/jquery.fancybox.pack.js?v=2.0.5" type="text/javascript"></script>
-    <script src="./fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5" type="text/javascript"></script>
-    <script src="./jquery.picasagallery.js" type="text/javascript"></script>
+    <script src="https://raw.github.com/alanhamlett/jQuery-Picasa-Gallery/master/fancyBox/jquery.fancybox.pack.js?v=2.0.5" type="text/javascript"></script>
+    <script src="https://raw.github.com/alanhamlett/jQuery-Picasa-Gallery/master/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5" type="text/javascript"></script>
+    <script src="https://raw.github.com/alanhamlett/jQuery-Picasa-Gallery/master/jquery.picasagallery.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() { $('.picasagallery').picasagallery({'username':'alan.hamlett'}); } );
     </script>
@@ -45,20 +42,28 @@
       <section id="main_content" class="inner">
 <h3>Example</h3>
         
-<div class='picasagallery'></div>
+<!-- EXAMPLE PLACEHOLDER -->
+<div class='picasagallery' style="width:700px;"></div>
 
-<div style='margin:10px 50px 0px 50px; border:2px solid black; padding: 10px; background:#EFF4F8;'>
+<div style="width:700px;">
 <p>HTML:</p>
-<p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">&lt;div class='picasagallery'&gt;&lt;/div&gt;</pre></p>
+<p><pre style="font-size:12px;">
+&lt;div class='picasagallery'&gt;&lt;/div&gt;
+</pre></p>
 <p>Javascript:</p>
-<p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">$(document).ready( function() { $('.picasagallery').picasagallery( {'username':'alan.hamlett'} ); } );</pre></p>
+<p><pre style="font-size:12px;">
+$(document).ready( function() {
+    $('.picasagallery').picasagallery( {'username':'alan.hamlett'} );
+} );
+</pre></p>
 <p>Default Options:</p>
-<p>
-<pre style="border:1px solid #B6C5CF; background:#CADBE6;">{
+<p><pre style="font-size:12px;">
+{
     'username' : '',
     'hide_albums' : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
     'thumbnail_width' : '160'
-}</pre><p>
+}
+</pre><p>
 </div>
 
 <h3>Download</h3>
