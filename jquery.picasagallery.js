@@ -196,7 +196,7 @@
             'username'        : '',
             'hide_albums'     : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
             'loaded'          : false,
-            'thumbnail_width' : '160'
+            'thumbnail_width' : '160',
             'title' : 'Picasa Photo Gallery'
         }, options));
         var data = this.data('picasagallery');
