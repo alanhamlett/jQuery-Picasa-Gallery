@@ -55,15 +55,17 @@
 <p>Javascript:</p>
 <p><pre style="font-size:12px;">
 $(document).ready( function() {
-    $('.picasagallery').picasagallery( {'username':'alan.hamlett'} );
+    $('.picasagallery').picasagallery( {username:'alan.hamlett'} );
 } );
 </pre></p>
 <p>Default Options:</p>
 <p><pre style="font-size:12px;">
 {
-    'username' : '',
-    'hide_albums' : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
-    'thumbnail_width' : '160'
+    username: '', // Your Picasa public username
+    hide_albums: ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'], // hidden album names
+    thumbnail_width: '160', // width of album and photo thumbnails
+    title: 'Picasa Photo Gallery', // title shown above album list
+    inline: false, // true to display photos inline instead of using the fancybox plugin
 }
 </pre><p>
 </div>
