@@ -78,8 +78,7 @@
                     "'/><p><strong>" + album_title + "</strong></p><p>" +
                     json.feed.entry[i].gphoto$numphotos.$t +
                     " photos</p></div>"
-                );
-                this.children('div:first').children('div:last').children('img:first').click(picasagallery_load_album);
+                ).children('div:last').children('img:first').data('album', json.feed.entry[i].gphoto$name.$t).click(picasagallery_load_album);
             }
 
             // append blank div to resize parent elements
@@ -90,16 +89,17 @@
         }, this));
     };
 
-    var picasagallery_load_album = function(album) {
+    var picasagallery_load_album = function() {
         if(busy)
             return;
         busy = true;
 
-        var dom = $(this).parent().parent().parent(); // original album element
+        //var dom = $(this).parent().parent().parent(); // original album element
+        var dom = $('.picasagallery');
         var data = dom.data('picasagallery'); // original options passed to picasagallery()
-        var album = $(this).attr('alt');
+        var album = $(this).data('album');
         var protocol = document.location.protocol == 'http:' ? 'http:' : 'https:';
-        var url    = protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '/album/' + album + '?kind=photo&alt=json';
+        var url = protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '/album/' + album + '?kind=photo&alt=json';
 
         // initialize album html content
         dom.children('div:last').html('loading...').show();
@@ -109,7 +109,18 @@
         $.getJSON(url, 'callback=?', $.proxy(function(json) {
             
             // set album's title
-            dom.children('span[class="picasagallery_title"]:first').html('<strong>Album:</strong> ' + json.feed.title.$t);
+            var album_header = dom.children('span[class="picasagallery_title"]:first').html('<strong>Album:</strong> <span class="picasagallery_album_name">' + json.feed.title.$t + '</span>');
+            if (data.inline)
+                album_header.find('span:last').wrap('<a href="#"></a>').parent().data('album', album).click(function(e) {
+                    if (!e)
+                        e = window.event;
+                    if (e.preventDefault)
+                        e.preventDefault();
+                    else
+                        e.returnValue = false;
+                    picasagallery_load_album.apply(this);
+                    return false;
+                });
            
             // reset album html
             dom.children('div:last').html('');
@@ -125,40 +136,52 @@
                 var screen_width = $(window).width();
 
                 // add html for this image
-                dom.children('div:last').append(
-                    "<a rel='picasagallery_thumbnail' class='picasagallery_thumbnail' href='" +
-                    img_src + '/s' + screen_width + '/' + img_filename +
-                    "' title='" +
-                    summary +
-                    "'><img src='" +
-                    img_src + '/s' + data.thumbnail_width + '/' + img_filename +
-                    "' alt='" +
-                    summary +
-                    "' title='" +
-                    summary +
-                    "'/></a>"
-                );
+                var html = "<a rel='picasagallery_thumbnail' class='picasagallery_thumbnail' href='" +
+                           img_src + '/s' + screen_width + '/' + img_filename +
+                           "' title='" +
+                           summary +
+                           "'><img src='" +
+                           img_src + '/s' + data.thumbnail_width + '/' + img_filename +
+                           "' alt='" +
+                           summary +
+                           "' title='" +
+                           summary +
+                           "'/></a>"
+                ;
+                dom.children('div:last').append(html);
             }
 
             // append blank div to resize parent elements
             dom.children('div:last').append('<div style="clear:both"></div>');
             
             // setup fancybox to show larger images
-            $("a[rel=picasagallery_thumbnail]").fancybox({
-                closeClick        : false, // If set to true, fancyBox will be closed when user clicks the content
-                mouseWheel        : false, // If set to true, you will be able to navigate gallery using the mouse wheel
-                loop              : true, // If set to true, enables cyclic navigation. This means, if you click "next" after you reach the last element, first element will be displayed (and vice versa).
-                openEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
-                closeEffect       : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
-                nextEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
-                prevEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
-                helpers           : {
-                    thumbs  : {
-                        width   : 80,
-                        height  : 80
+            if (data.inline)
+                $("a[rel=picasagallery_thumbnail]").click(function(e) {
+                    if (!e)
+                        e = window.event;
+                    if (e.preventDefault)
+                        e.preventDefault();
+                    else
+                        e.returnValue = false;
+                    dom.children('div:last').html('<img src="'+ $(this).prop('href') +'" />');
+                    return false;
+                });
+            else
+                $("a[rel=picasagallery_thumbnail]").fancybox({
+                    closeClick        : false, // If set to true, fancyBox will be closed when user clicks the content
+                    mouseWheel        : false, // If set to true, you will be able to navigate gallery using the mouse wheel
+                    loop              : true, // If set to true, enables cyclic navigation. This means, if you click "next" after you reach the last element, first element will be displayed (and vice versa).
+                    openEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                    closeEffect       : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                    nextEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                    prevEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
+                    helpers           : {
+                        thumbs  : {
+                            width   : 80,
+                            height  : 80
+                        }
                     }
-                }
-            });
+                });
 
             busy = false;
         }, this));
