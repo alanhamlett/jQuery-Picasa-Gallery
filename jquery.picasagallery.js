@@ -18,30 +18,26 @@
 // # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // # THE SOFTWARE.
 
-(function( $ ){
+(function( window, $, undefined ) {
     
     var busy = false;
 
     // Private methods
     
     var picasagallery_load_albums = function() {
-        if(busy) {
+        if(busy)
             return;
-        }
         busy = true;
 
-        var $this = $(this); // save this DOM element so we can see it inside the ajax callback
-        var data = $this.data('picasagallery'); // original options passed to picasagallery()
-        if(!data) {
-            $this = $(this).parent();
-            data = $this.data('picasagallery');
-        }
+        var data = this.data('picasagallery'); // original options passed to picasagallery()
+        if(!data)
+            data = $(this).parent().data('picasagallery');
 
         // restore album list from hidden div if exists
         if(data.loaded) {
-            $this.children('div:last').html('loading...').hide();
-            $this.children('span[class="picasagallery_title"]:first').html('');
-            $this.children('div:first').show();
+            this.children('div:last').html('loading...').hide();
+            this.children('span[class="picasagallery_title"]:first').html('');
+            this.children('div:first').show();
             busy = false;
             return;
         }
@@ -50,15 +46,15 @@
         var url    = protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '?kind=album&access=public&alt=json';
         
         // print loading message
-        $this.html("loading...");
+        this.html("loading...");
 
         // make ajax call to get public picasaweb albums
-        $.getJSON(url, 'callback=?', function(json) {
+        $.getJSON(url, 'callback=?', $.proxy(function(json) {
             
             // initialize album html content
-            $this.html("<span class='picasagallery_header'>"+data.title+"</span><span class='picasagallery_title'></span><div></div><div></div>");
-            $this.children('div:last').hide();
-            $this.children('span[class="picasagallery_header"]:first').click(picasagallery_load_albums);
+            this.html("<span class='picasagallery_header'>"+data.title+"</span><span class='picasagallery_title'></span><div></div><div></div>");
+            this.children('div:last').hide();
+            this.children('span[class="picasagallery_header"]:first').click($.proxy(picasagallery_load_albums, this));
             
             // loop through albums
             for(i = 0; i < json.feed.entry.length; i++) {
@@ -75,7 +71,7 @@
                 var img_src = img_src.join('/');
 
                 // append html for this album
-                $this.children('div:first').append(
+                this.children('div:first').append(
                     "<div class='picasagallery_album'><img src='" +
                     img_src + '/s' + data.thumbnail_width + '-c/' + img_filename +
                     "' alt='" + json.feed.entry[i].gphoto$name.$t + "' title='" + album_title +
@@ -83,21 +79,20 @@
                     json.feed.entry[i].gphoto$numphotos.$t +
                     " photos</p></div>"
                 );
-                $this.children('div:first').children('div:last').children('img:first').click(picasagallery_load_album);
+                this.children('div:first').children('div:last').children('img:first').click(picasagallery_load_album);
             }
 
             // append blank div to resize parent elements
-            $this.children('div:first').append('<div style="clear:both"></div>');
+            this.children('div:first').append('<div style="clear:both"></div>');
             
             data.loaded = true;
             busy = false;
-        });
+        }, this));
     };
 
     var picasagallery_load_album = function(album) {
-        if(busy) {
+        if(busy)
             return;
-        }
         busy = true;
 
         var dom = $(this).parent().parent().parent(); // original album element
@@ -111,7 +106,7 @@
         dom.children('div:first').hide();
         
         // make ajax call to get album's images
-        $.getJSON(url, 'callback=?', function(json) {
+        $.getJSON(url, 'callback=?', $.proxy(function(json) {
             
             // set album's title
             dom.children('span[class="picasagallery_title"]:first').html('<strong>Album:</strong> ' + json.feed.title.$t);
@@ -166,7 +161,7 @@
             });
 
             busy = false;
-        });
+        }, this));
     };
 
     var htmlencode = function(str) {
@@ -187,25 +182,23 @@
             console.error('Picasa Gallery Error: ' + msg);
         }
     }
-
     
-    // Public methods
-
+    // Public method
     $.fn.picasagallery = function(options) {
         this.data('picasagallery', $.extend({
-            'username'        : '',
-            'hide_albums'     : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
-            'loaded'          : false,
-            'thumbnail_width' : '160',
-            'title' : 'Picasa Photo Gallery'
+            'username': '',
+            'hide_albums': ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
+            'thumbnail_width': '160',
+            'title': 'Picasa Photo Gallery',
+            'inline': false,
+            'loaded': false
         }, options));
-        var data = this.data('picasagallery');
-        if(data === undefined) {
-            picasagallery_error('Cannot call method \'picasagallery\' of undefined');
+        if (this.data('picasagallery') === undefined) {
+            picasagallery_error('Cannot call method \'picasagallery\' of undefined. Must be called on a jQuery DOM object.');
             return;
         }
-        if( !data.username ) {
-            picasagallery_error('missing username');
+        if (!this.data('picasagallery').username) {
+            picasagallery_error('Missing username.');
             return;
         }
         this.addClass('picasagallery');
@@ -213,5 +206,5 @@
         return this;
     };
 
-}) ( jQuery );
+}) ( window, jQuery );
 

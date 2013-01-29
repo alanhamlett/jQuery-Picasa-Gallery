@@ -11,7 +11,7 @@
         <script src="./fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5" type="text/javascript"></script>
         <script src="./jquery.picasagallery.js" type="text/javascript"></script>
         <script type="text/javascript">
-            $(document).ready(function() { $('.picasagallery').picasagallery({'username':'alan.hamlett'}); } );
+            $(document).ready(function() { $('.picasagallery').picasagallery({username:'alan.hamlett'}); } );
         </script>
         
     </head>
@@ -27,12 +27,13 @@
         <p>HTML:</p>
         <p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">&lt;div class='picasagallery'&gt;&lt;/div&gt;</pre></p>
         <p>Javascript:</p>
-        <p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">$(document).ready( function() { $('.picasagallery').picasagallery( {'username':'alan.hamlett'} ); } );</pre></p>
+        <p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">$(document).ready( function() { $('.picasagallery').picasagallery( {username:'alan.hamlett'} ); } );</pre></p>
         <p>Default Options:</p>
         <p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">{
-    'username' : '',
-    'hide_albums' : ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
-    'thumbnail_width' : '160'
+    username: '', // Your Picasa public username
+    hide_albums: ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'], // hidden album names
+    thumbnail_width: '160', // width of album and photo thumbnails
+    title: 'Picasa Photo Gallery', // title shown above album list
 }</pre><p>
     </div>
     </body>
