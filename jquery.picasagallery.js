@@ -73,7 +73,7 @@
                 // append html for this album
                 this.children('div:first').append(
                     "<div class='picasagallery_album'><img src='" +
-                    img_src + '/s' + data.thumbnail_width + '-c/' + img_filename +
+                    img_src + '/s' + data.thumbnail_width + ( data.thumbnail_cropped ? '-c' : '' ) + '/' + img_filename +
                     "' alt='" + json.feed.entry[i].gphoto$name.$t + "' title='" + album_title +
                     "'/><p><strong>" + album_title + "</strong></p><p>" +
                     json.feed.entry[i].gphoto$numphotos.$t +
@@ -141,7 +141,7 @@
                            "' title='" +
                            summary +
                            "'><img src='" +
-                           img_src + '/s' + data.thumbnail_width + '/' + img_filename +
+                           img_src + '/s' + data.thumbnail_width + ( data.thumbnail_cropped ? '-c' : '' ) + '/' + img_filename +
                            "' alt='" +
                            summary +
                            "' title='" +
@@ -212,6 +212,7 @@
             'username': '',
             'hide_albums': ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
             'thumbnail_width': '160',
+            'thumbnail_cropped': false,
             'title': 'Picasa Photo Gallery',
             'inline': false,
             'loaded': false
