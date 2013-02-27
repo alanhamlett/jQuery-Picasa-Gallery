@@ -19,11 +19,11 @@
 // # THE SOFTWARE.
 
 (function( window, $, undefined ) {
-    
+
     var busy = false;
 
     // Private methods
-    
+
     var picasagallery_load_albums = function() {
         if(busy)
             return;
@@ -41,25 +41,25 @@
             busy = false;
             return;
         }
-        
+
         var protocol = document.location.protocol == 'http:' ? 'http:' : 'https:';
         var url    = protocol + '//picasaweb.google.com/data/feed/api/user/' + data.username + '?kind=album&access=public&alt=json';
-        
+
         // print loading message
         this.html("loading...");
 
         // make ajax call to get public picasaweb albums
         $.getJSON(url, 'callback=?', $.proxy(function(json) {
-            
+
             // initialize album html content
             this.html("<span class='picasagallery_header'>"+data.title+"</span><span class='picasagallery_title'></span><div></div><div></div>");
             this.children('div:last').hide();
             this.children('span[class="picasagallery_header"]:first').click($.proxy(picasagallery_load_albums, this));
-            
+
             // loop through albums
             for(i = 0; i < json.feed.entry.length; i++) {
                 var album_title = htmlencode(json.feed.entry[i].title.$t);
-                
+
                 // skip this album if in hide_albums array
                 if($.inArray(album_title, data.hide_albums) > -1) {
                     continue;
@@ -83,7 +83,7 @@
 
             // append blank div to resize parent elements
             this.children('div:first').append('<div style="clear:both"></div>');
-            
+
             data.loaded = true;
             busy = false;
         }, this));
@@ -104,10 +104,10 @@
         // initialize album html content
         dom.children('div:last').html('loading...').show();
         dom.children('div:first').hide();
-        
+
         // make ajax call to get album's images
         $.getJSON(url, 'callback=?', $.proxy(function(json) {
-            
+
             // set album's title
             var album_header = dom.children('span[class="picasagallery_title"]:first').html('<strong>Album:</strong> <span class="picasagallery_album_name">' + json.feed.title.$t + '</span>');
             if (data.inline)
@@ -121,13 +121,13 @@
                     picasagallery_load_album.apply(this);
                     return false;
                 });
-           
+
             // reset album html
             dom.children('div:last').html('');
 
             // loop through album's images
             for(i = 0; i < json.feed.entry.length; i++) {
-               
+
                 // get image properties
                 var summary = htmlencode(json.feed.entry[i].summary.$t);
                 var img_src = json.feed.entry[i].content.src.split('/');
@@ -153,7 +153,7 @@
 
             // append blank div to resize parent elements
             dom.children('div:last').append('<div style="clear:both"></div>');
-            
+
             // setup fancybox to show larger images
             if (data.inline)
                 $("a[rel=picasagallery_thumbnail]").click(function(e) {
@@ -205,14 +205,14 @@
             console.error('Picasa Gallery Error: ' + msg);
         }
     }
-    
+
     // Public method
     $.fn.picasagallery = function(options) {
         this.data('picasagallery', $.extend({
             'username': '',
             'hide_albums': ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
             'thumbnail_width': '160',
-            'thumbnail_cropped': false,
+            'thumbnail_cropped': true,
             'title': 'Picasa Photo Gallery',
             'inline': false,
             'loaded': false
