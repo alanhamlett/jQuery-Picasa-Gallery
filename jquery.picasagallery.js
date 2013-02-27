@@ -213,7 +213,7 @@
             'hide_albums': ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
             'thumbnail_width': '160',
             'thumbnail_cropped': true,
-            'title': 'Picasa Photo Gallery',
+            'title': 'Photos',
             'inline': false,
             'loaded': false
         }, options));
