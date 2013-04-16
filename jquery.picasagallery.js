@@ -20,9 +20,10 @@
 
 (function( window, $, undefined ) {
 
-    var busy = false;
+    var VERSION = '1.0';
 
     // Private methods
+    var busy = false;
 
     var picasagallery_load_albums = function() {
         if(busy)
