@@ -1,4 +1,4 @@
-## jQuery Picasa Gallery
+## jQuery Picasa Gallery v1.0
 jQuery plugin that displays your public picasa web albums on your website in a photo gallery.
 
 ### Example
