@@ -57,8 +57,13 @@
             this.children('span[class="picasagallery_header"]:first').click($.proxy(picasagallery_load_albums, this));
 
             // loop through albums
-            for(i = 0; i < json.feed.entry.length; i++) {
+            for(var i = 0; i < json.feed.entry.length; i++) {
                 var album_title = htmlencode(json.feed.entry[i].title.$t);
+                var album_link = '#';
+                for(var j = 0; j < json.feed.entry[i].link.length; j++) {
+                    if (json.feed.entry[i].link[j].type == 'text/html')
+                        album_link = htmlencode(json.feed.entry[i].link[j].href);
+                }
 
                 // skip this album if in hide_albums array
                 if($.inArray(album_title, data.hide_albums) > -1) {
@@ -77,7 +82,9 @@
                     "' alt='" + json.feed.entry[i].gphoto$name.$t + "' title='" + album_title +
                     "'/><p><strong>" + album_title + "</strong></p><p>" +
                     json.feed.entry[i].gphoto$numphotos.$t +
-                    " photos</p></div>"
+                    ' photos' +
+                    ( data.link_to_picasa ? '<a href="'+album_link+'" title="View Album on Picasa" style="position:relative;margin-left:6px;" target="_blank"><img src="chain-icon.gif" alt="chain-icon" style="margin:0;top:4px;position:relative;"/></a>' : '') +
+                    '</p></div>'
                 ).children('div:last').children('img:first').data('album', json.feed.entry[i].gphoto$name.$t).click(picasagallery_load_album);
             }
 
@@ -211,6 +218,7 @@
         this.data('picasagallery', $.extend({
             'username': '',
             'hide_albums': ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'],
+            'link_to_picasa': false,
             'thumbnail_width': '160',
             'thumbnail_cropped': true,
             'title': 'Photos',
