@@ -163,7 +163,7 @@
             dom.children('div:last').append('<div style="clear:both"></div>');
 
             // setup fancybox to show larger images
-            if (data.inline)
+            if (data.inline) {
                 $("a[rel=picasagallery_thumbnail]").click(function(e) {
                     if (!e)
                         e = window.event;
@@ -174,7 +174,7 @@
                     dom.children('div:last').html('<img src="'+ $(this).prop('href') +'" />');
                     return false;
                 });
-            else
+            } else {
                 $("a[rel=picasagallery_thumbnail]").fancybox({
                     closeClick        : false, // If set to true, fancyBox will be closed when user clicks the content
                     mouseWheel        : false, // If set to true, you will be able to navigate gallery using the mouse wheel
@@ -190,6 +190,9 @@
                         }
                     }
                 });
+                if (data.auto_open)
+                    $('a.picasagallery_thumbnail:first').click();
+            }
 
             busy = false;
         }, this));
@@ -224,6 +227,7 @@
             'thumbnail_cropped': true,
             'title': 'Photos',
             'inline': false,
+            'auto_open': false,
             'loaded': false
         }, options));
         if (this.data('picasagallery') === undefined) {
