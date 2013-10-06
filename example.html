@@ -7,6 +7,7 @@
         <link href="./jquery.picasagallery.css" rel="stylesheet" type="text/css" media="screen" />
         <link href="./fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" rel="stylesheet" type="text/css" media="screen" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="./fancyBox/jquery.mousewheel-3.0.6.pack.js" type="text/javascript"></script>
         <script src="./fancyBox/jquery.fancybox.pack.js?v=2.0.5" type="text/javascript"></script>
         <script src="./fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5" type="text/javascript"></script>
         <script src="./jquery.picasagallery.js" type="text/javascript"></script>
@@ -30,13 +31,19 @@
         <p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">$(document).ready( function() { $('.picasagallery').picasagallery( {username:'alan.hamlett'} ); } );</pre></p>
         <p>Default Options:</p>
         <p><pre style="border:1px solid #B6C5CF; background:#CADBE6;">{
-    username: '', // Your Picasa public username
+    username: '', // Your Picasa public username or your Google+ User ID (e.g. https://plus.google.com/u/0/b/this-is-your-user-id)
     hide_albums: ['Profile Photos', 'Scrapbook Photos', 'Instant Upload', 'Photos from posts'], // hidden album names
     link_to_picasa: false, // true to display link to original album on Google Picasa
     thumbnail_width: '160', // width of album and photo thumbnails
     thumbnail_cropped: false, // use cropped format (square)
     title: 'Picasa Photo Gallery', // title shown above album list
     inline: false, // true to display photos inline instead of using the fancybox plugin
+    auto_open: false, // true to automatically open fancyBox for the first photo in the album
+    loaded: false, // true if data was already loaded. false will enable retrieval of data while true will assume that data has been loaded already.
+    mouseWheel: false, // fancyBox setting. If set to true, you will be able to navigate gallery using the mouse wheel
+    arrows: true, // fancyBox setting. If set to true, fancyBox will display arrows
+    closeClick: false, // fancyBox setting. If set to true, fancyBox will be closed when user clicks the content
+    closeBtn: true // fancyBox setting. If set to true, fancyBox will display a close button
 }</pre><p>
     </div>
     </body>

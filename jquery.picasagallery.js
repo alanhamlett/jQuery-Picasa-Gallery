@@ -176,8 +176,10 @@
                 });
             } else {
                 $("a[rel=picasagallery_thumbnail]").fancybox({
-                    closeClick        : false, // If set to true, fancyBox will be closed when user clicks the content
-                    mouseWheel        : false, // If set to true, you will be able to navigate gallery using the mouse wheel
+                    closeClick        : data.closeClick, // If set to true, fancyBox will be closed when user clicks the content
+                    closeBtn          : data.closeBtn, // If set to true, fancyBox will display a close button
+                    mouseWheel        : data.mouseWheel, // If set to true, you will be able to navigate gallery using the mouse wheel
+                    arrows            : data.arrows, // If set to true, fancyBox will display arrows
                     loop              : true, // If set to true, enables cyclic navigation. This means, if you click "next" after you reach the last element, first element will be displayed (and vice versa).
                     openEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
                     closeEffect       : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
@@ -228,7 +230,11 @@
             'title': 'Photos',
             'inline': false,
             'auto_open': false,
-            'loaded': false
+            'loaded': false,
+            'mouseWheel': false, // fancyBox setting
+            'arrows': true, // fancyBox setting
+            'closeClick': false, // fancyBox setting
+            'closeBtn': true // fancyBox setting
         }, options));
         if (this.data('picasagallery') === undefined) {
             picasagallery_error('Cannot call method \'picasagallery\' of undefined. Must be called on a jQuery DOM object.');
