@@ -1,7 +1,7 @@
 ## jQuery Picasa Gallery v1.0
 jQuery plugin that displays your public picasa/google+ web albums on your website in a photo gallery.
 
-### Important Warning: Google is Depreciating the Picasa API
+### Important Warning: Google is Deprecating the Picasa API
 
 More information about this change can be found at:
 https://developers.google.com/picasa-web/
