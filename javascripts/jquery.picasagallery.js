@@ -58,7 +58,7 @@
             this.children('span[class="picasagallery_header"]:first').click($.proxy(picasagallery_load_albums, this));
 
             // loop through albums
-            for(var i = 0; i < json.feed.entry.length; i++) {
+            for (var i = 0; i < json.feed.entry.length; i++) {
                 var album_title = htmlencode(json.feed.entry[i].title.$t);
                 var album_link = '#';
                 for(var j = 0; j < json.feed.entry[i].link.length; j++) {
@@ -72,16 +72,16 @@
                 }
 
                 // get album thumbnail
-                var img_src = json.feed.entry[i].media$group.media$content[0].url.split('/');
-                var img_filename = img_src.pop();
-                var img_src = img_src.join('/');
+                // console.log(json.feed.entry[i]);
+                var img_src = json.feed.entry[i].media$group.media$content[0].url;
+                var img_filename = json.feed.entry[i].media$group.media$content[0].url.split('/').pop();
 
                 // append html for this album
                 this.children('div:first').append(
-                    "<div class='picasagallery_album'><img src='" +
-                    img_src + '/s' + data.thumbnail_width + ( data.thumbnail_cropped ? '-c' : '' ) + '/' + img_filename +
-                    "' alt='" + json.feed.entry[i].gphoto$name.$t + "' title='" + album_title +
-                    "'/><p><strong>" + album_title + "</strong></p><p>" +
+                    '<div class="picasagallery_album"><img src="' + img_src + '"' +
+                    ' alt="' + json.feed.entry[i].gphoto$name.$t + '" title="' + album_title + '"' +
+                    ' style="width:' + data.thumbnail_width + 'px;" />' +
+                    '<p><strong>' + album_title + '</strong></p><p>' +
                     json.feed.entry[i].gphoto$numphotos.$t +
                     ' photos' +
                     ( data.link_to_picasa ? '<a href="'+album_link+'" title="View Album on Picasa" style="position:relative;margin-left:6px;" target="_blank"><img src="chain-icon.gif" alt="chain-icon" style="margin:0;top:4px;position:relative;"/></a>' : '') +
@@ -138,23 +138,18 @@
 
                 // get image properties
                 var summary = htmlencode(json.feed.entry[i].summary.$t);
-                var img_src = json.feed.entry[i].content.src.split('/');
-                var img_filename = img_src.pop();
-                var img_src = img_src.join('/');
+                var img_src = json.feed.entry[i].content.src;
+                var img_filename = json.feed.entry[i].content.src.split('/').pop();
                 var screen_width = $(window).width();
 
                 // add html for this image
-                var html = "<a rel='picasagallery_thumbnail' class='picasagallery_thumbnail' href='" +
-                           img_src + '/s' + screen_width + '/' + img_filename +
-                           "' title='" +
-                           summary +
-                           "'><img src='" +
-                           img_src + '/s' + data.thumbnail_width + ( data.thumbnail_cropped ? '-c' : '' ) + '/' + img_filename +
-                           "' alt='" +
-                           summary +
-                           "' title='" +
-                           summary +
-                           "'/></a>"
+                var html = '<a rel="picasagallery_thumbnail" class="picasagallery_thumbnail"' +
+                           ' href="' + img_src + '"' +
+                           ' title="' + summary + '"' +
+                           '><img src="' + img_src + '"' +
+                           ' alt="' + summary + '"' +
+                           ' title="' + summary + '"' +
+                           '/></a>'
                 ;
                 dom.children('div:last').append(html);
             }
@@ -176,8 +171,10 @@
                 });
             } else {
                 $("a[rel=picasagallery_thumbnail]").fancybox({
-                    closeClick        : false, // If set to true, fancyBox will be closed when user clicks the content
-                    mouseWheel        : false, // If set to true, you will be able to navigate gallery using the mouse wheel
+                    closeClick        : data.closeClick, // If set to true, fancyBox will be closed when user clicks the content
+                    closeBtn          : data.closeBtn, // If set to true, fancyBox will display a close button
+                    mouseWheel        : data.mouseWheel, // If set to true, you will be able to navigate gallery using the mouse wheel
+                    arrows            : data.arrows, // If set to true, fancyBox will display arrows
                     loop              : true, // If set to true, enables cyclic navigation. This means, if you click "next" after you reach the last element, first element will be displayed (and vice versa).
                     openEffect        : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
                     closeEffect       : 'elastic', // Animation effect ('elastic', 'fade' or 'none')
@@ -228,7 +225,11 @@
             'title': 'Photos',
             'inline': false,
             'auto_open': false,
-            'loaded': false
+            'loaded': false,
+            'mouseWheel': false, // fancyBox setting
+            'arrows': true, // fancyBox setting
+            'closeClick': false, // fancyBox setting
+            'closeBtn': true // fancyBox setting
         }, options));
         if (this.data('picasagallery') === undefined) {
             picasagallery_error('Cannot call method \'picasagallery\' of undefined. Must be called on a jQuery DOM object.');
