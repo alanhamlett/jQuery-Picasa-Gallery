@@ -80,8 +80,8 @@
                 this.children('div:first').append(
                     '<div class="picasagallery_album"><img src="' + img_src + '"' +
                     ' alt="' + json.feed.entry[i].gphoto$name.$t + '" title="' + album_title + '"' +
-                    ' style="width:' + data.thumbnail_width + 'px;" />' +
-                    '<p><strong>' + album_title + '</strong></p><p>' +
+                    ( data.thumbnail_cropped ? ' style="width:' + data.thumbnail_width + 'px;"' : '') +
+                    '/><p><strong>' + album_title + '</strong></p><p>' +
                     json.feed.entry[i].gphoto$numphotos.$t +
                     ' photos' +
                     ( data.link_to_picasa ? '<a href="'+album_link+'" title="View Album on Picasa" style="position:relative;margin-left:6px;" target="_blank"><img src="chain-icon.gif" alt="chain-icon" style="margin:0;top:4px;position:relative;"/></a>' : '') +
@@ -149,6 +149,7 @@
                            '><img src="' + img_src + '"' +
                            ' alt="' + summary + '"' +
                            ' title="' + summary + '"' +
+                           ( data.thumbnail_cropped ? ' style="width:' + data.thumbnail_width + 'px;"' : '') +
                            '/></a>'
                 ;
                 dom.children('div:last').append(html);
